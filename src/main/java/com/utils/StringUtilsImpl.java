@@ -1,6 +1,8 @@
 package com.utils;
 
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 public class StringUtilsImpl implements StringUtils {
 
@@ -42,7 +44,7 @@ public class StringUtilsImpl implements StringUtils {
         String separatingSymbols = "[\\s,]+"; // space or comma one or more times
         String[] words = str.toLowerCase().split(separatingSymbols);
         StringBuilder camelCase = new StringBuilder();
-        camelCase.append(words[0]);
+        camelCase.append(words[0]); // first word
         for (String word : words) {
             camelCase.append(capitalize(word));
         }
@@ -59,7 +61,24 @@ public class StringUtilsImpl implements StringUtils {
 
     @Override
     public String fromCamelCase(String camelStr) {
-        return null;
+        if (Objects.isNull(camelStr) || camelStr.length() == 0) {
+            return camelStr;
+        }
+        String separatingSymbols = "(?=\\p{Lu})"; // \p{Lu} - an uppercase letter
+        String[] words = camelStr.split(separatingSymbols);
+        StringJoiner fromCamelCase = new StringJoiner(" ");
+        fromCamelCase.add(words[0]); // first word
+        for (String word : words) {
+            fromCamelCase.add(unCapitalize(word));
+        }
+        return fromCamelCase.toString();
+    }
+
+    private String unCapitalize(String word) {
+        if (Objects.isNull(word) || word.length() == 0) {
+            return word;
+        }
+        return word.substring(0, 1).toLowerCase() + word.substring(1);
     }
 
 }
