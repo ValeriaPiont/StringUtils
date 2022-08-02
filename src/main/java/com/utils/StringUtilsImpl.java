@@ -3,6 +3,7 @@ package com.utils;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 public class StringUtilsImpl implements StringUtils {
 
@@ -13,7 +14,22 @@ public class StringUtilsImpl implements StringUtils {
 
     @Override
     public String convertIp(String ip) {
-        return null;
+        String[] ipParts = ip.split("\\.");
+        return Arrays.stream(ipParts)
+                .map(this::addRequiredZerosToIp)
+                .collect(Collectors.joining("."));
+    }
+
+    private String addRequiredZerosToIp(String ip) {
+        int maxLength = 4;
+        if(ip.length() == maxLength) {
+            return ip;
+        }
+        StringBuilder ipBuilder = new StringBuilder(ip);
+        while (ipBuilder.length() < maxLength) {
+            ipBuilder.insert(0, "0");
+        }
+        return ipBuilder.toString();
     }
 
     @Override
