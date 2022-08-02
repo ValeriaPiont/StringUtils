@@ -69,9 +69,6 @@ public class StringUtilsImpl implements StringUtils {
 
     // remark: analogue org.apache.commons.lang3.StringUtils.capitalize()
     private String capitalize(String word) {
-        if (Objects.isNull(word) || word.length() == 0) {
-            return word;
-        }
         return word.substring(0, 1).toUpperCase() + word.substring(1);
     }
 
@@ -91,9 +88,6 @@ public class StringUtilsImpl implements StringUtils {
     }
 
     private String unCapitalize(String word) {
-        if (Objects.isNull(word) || word.length() == 0) {
-            return word;
-        }
         return word.substring(0, 1).toLowerCase() + word.substring(1);
     }
 
